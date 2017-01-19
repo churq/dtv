@@ -8,12 +8,13 @@ from configuration.settings import COMPANY_TABLENAME, SOURCE_TABLENAME
 log.init()
 logger = logging.getLogger('DATABASE')
 
-
 logger.info("Opened database successfully")
+
 
 def db_setup(tablename, code):
     conn = sqlite3.connect('test.db')
     cur = conn.cursor()
+
     def create_table():
         cur.execute('''CREATE TABLE {}
                        (ID TEXT PRIMARY KEY     NOT NULL,
@@ -28,6 +29,7 @@ def db_setup(tablename, code):
     cur.close()
     conn.close()
 
+
 def acquire_code(table_name, name):
     conn = sqlite3.connect('test.db')
     cur = conn.cursor()
@@ -38,6 +40,7 @@ def acquire_code(table_name, name):
     conn.close()
 
     return code[0][0] if code else None
+
 
 if __name__ == '__main__':
     logger.info('setup database...')

@@ -19,7 +19,7 @@ def run(login_information):
 
 
 if __name__ == '__main__':
-    logger.info('input:\n')
+    logger.info("please input 'login source', 'business', 'user name', seperate by ',':\n")
     login_information = []
     while True:
         input_line = input('>')

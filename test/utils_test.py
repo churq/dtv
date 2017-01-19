@@ -42,11 +42,11 @@ class TestHash(unittest.TestCase):
         ('jess0002', 'HFFFT7'),
         ('joe4444', 'JJY3TJ'),
         ('rachel01', 'FPRWTG'),
-        ('jess1234','JI7GHY')
+        ('jess1234', 'JI7GHY')
 
     ])
     def test_hashed_function(self, input_str, hashed_result):
         hash_ = Hash()
-        for i in range(0,3):
+        for i in range(0, 3):
             hashed = hash_._hash_function(input_str)
             self.assertEqual(hashed, hashed_result)
