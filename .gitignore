@@ -1,4 +1,4 @@
-.idea/
+.idea
 dev.yml
 *.pyc
 __pycache__/
