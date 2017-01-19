@@ -1,3 +1,6 @@
+.idea
 dev.yml
+*.pyc
 __pycache__/
-.idea/
+logs/
+test.db
