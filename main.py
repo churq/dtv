@@ -1,19 +1,30 @@
-from utils import Hash
+import logging
+import log
+from utils import id_generator
+
+log.init()
+logger = logging.getLogger('MAIN')
+
 
 def run(login_information):
-    hashid = Hash()
-    return_userid = []
+    user_ids = []
     for login in login_information:
-        company_source_code = acquire_code(login.company_name, login.source)
-        user_code = hashid.encode(login.user)
-        return_userid.append(company_source_code + user_code)
-        print
-
-
-
+        login_data = [data.strip() for data in login.split(',')]
+        source = login_data[0]
+        business = login_data[1]
+        user_name = login_data[2]
+        user_id = id_generator(source, business, user_name)
+        user_ids.append(user_id)
+        logger.info(user_id)
 
 
 if __name__ == '__main__':
-    login_information = input('please provide login information')
+    logger.info('input:\n')
+    login_information = []
+    while True:
+        input_line = input('>')
+        if len(input_line.strip()) == 0:
+            break
+        login_information.append(input_line)
+
     result = run(login_information)
-    print(result)
