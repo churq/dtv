@@ -19,3 +19,6 @@ execution
 ******************
 
 > python main.py
+
+
+Sorry I didn't write enough unit tests because I don't have enough time
