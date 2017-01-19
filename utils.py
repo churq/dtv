@@ -8,8 +8,16 @@ class Hash(object):
     This class is to encode the string to a unique ID
     """
     ALPHABET = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
-    def __init__(self,hashed_length):
-        self._hashed_length = hashed_length
+    HASHED_LEN = 6
+    def __init__(self, alphabet=ALPHABET, hashed_length=HASHED_LEN):
+        self._alphabet = alphabet
+        self._hashed_len = hashed_length
+        self._start_index = None
+
+
+    @property
+    def hashedvalue_len(self):
+        return 8
 
     def _verification(self, input_string):
         """
@@ -25,19 +33,99 @@ class Hash(object):
             logger.error('can not be encoded, input is not string')
             return
 
+        if not self._is_ascii(input_string):
+            logger.error('can not be encoded, input has to be ASCII')
+            return
+
     def encode(self, original_str):
         if not self._verification(original_str):
             return
 
+        return self._hash_function(original_str)
+
+    def _extend_str(self, input_str):
+        if len(input_str) < self._hashed_len:
+            while len(input_str) < self._hashed_len:
+                input_str = input_str*2
+        return input_str[:self._hashed_len]
 
     def _hash_function(self, input_str):
-        encoded_string_raw = [self.encode_character(char) for char in input_str]
+        if len(input_str) < self._hashed_len:
+            input_str = self._extend_str(input_str)
 
+        encoded_str = ['']*self._hashed_len
+        start_index = self._decide_start_index(input_str)
+        for char in input_str:
+            if '' not in encoded_str:
+                break
+            encoded_str[start_index] = self._encode_function(char)
+            if start_index == self._hashed_len - 1:
+                start_index = 0
+            else:
+                start_index += 1
+        unhashed_char = input_str[self._hashed_len-len(input_str):]
+        for char in unhashed_char:
+            new_str = unhashed_char + ''.join(encoded_str)
+            replaced_index = self._decide_start_index(new_str)
+            encoded_str[replaced_index] = self._encode_function(char)
+
+        return ''.join(encoded_str)
+
+
+    def _encode_function(self, original_char):
+        """
+        This function is to encode the alphanumeric character by mapping 'alphabet_ord' into self._alphabet
+
+        Args:
+            original_char:
+
+        Returns: encoded alphanumeric
+
+
+        """
+        start_index = int(len(self._alphabet)/2)
+        # put all the ASCII value of [0-9a-zA_Z] in the list
+        alphabet_ord = list(range(48, 58)) + list(range(97, 123)) + list(range(65, 91))
+        if ord(original_char) not in alphabet_ord:
+            return
+
+        if ord(original_char) in alphabet_ord:
+            for ord_value in alphabet_ord:
+                if ord_value == ord(original_char):
+                    return self._alphabet[start_index]
+
+                if start_index == len(self._alphabet) - 1:
+                    start_index = 0
+                else:
+                    start_index +=1
+
+
+    def _decide_start_index(self, input_str):
+        first_hashed = [(self._alphabet.index(char),self._alphabet.index(char) % self.hashedvalue_len) for char in input_str]
+        second_hashed = sum((item[0]*item[1] + 1)**3 for item in first_hashed)
+        start_index = second_hashed % self._hashed_len
+        return start_index
+
+    def _is_ascii(self, input_string):
+        return all(ord(char) < 128 for char in input_string)
 
 
 class IDGenerator(object):
-    def __init__(self, company_code, login_source_code, username):
-        self._company_code = company_code
-        self._login_source_code = login_source_code
+    def __init__(self, company_source_code, username):
+        self._company_source_code = company_source_code
         self._username = username
+        self._hash = Hash()
+
+
+
+def id_generator(company, source, username):
+    hashid = Hash()
+    encoded_user = hashid.encode(username)
+    encoded_company = acquire
+
+
+
+
+
+    
 
