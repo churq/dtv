@@ -20,3 +20,5 @@ SERVER = config['server']
 USER = config['user_name']
 PASSWORD = config['password']
 PORT = config['port']
+COMPANY_TABLENAME = 'company'
+SOURCE_TABLENAME = 'login_source'
