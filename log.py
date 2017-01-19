@@ -11,8 +11,10 @@ def init():
     logger_matching_engine = logging.getLogger('DATABASE')
     logger_matching_engine.setLevel(logging.INFO)
 
-    logger_redshift = logging.getLogger('MAIN')
-    logger_redshift.setLevel(logging.INFO)
+    logger_main = logging.getLogger('MAIN')
+    logger_main.setLevel(logging.INFO)
+
+    logging.getLogger('UTILS')
 
     file_handler = logging.FileHandler(
         LOG_DIR + '/' + 'output.log', mode='w')
