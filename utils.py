@@ -1,7 +1,12 @@
 import logging
+import log
+from configuration.settings import (
+SOURCE_TABLENAME, COMPANY_TABLENAME
+)
+from db_setup import acquire_code
 
-logger = logging.getLogger('Encoding Engine')
-
+logger = logging.getLogger('UTILS')
+log.init()
 
 class Hash(object):
     """
@@ -36,6 +41,8 @@ class Hash(object):
         if not self._is_ascii(input_string):
             logger.error('can not be encoded, input has to be ASCII')
             return
+
+        return True
 
     def encode(self, original_str):
         if not self._verification(original_str):
@@ -109,19 +116,26 @@ class Hash(object):
     def _is_ascii(self, input_string):
         return all(ord(char) < 128 for char in input_string)
 
+#
+# class IDGenerator(object):
+#     def __init__(self, company_source_code, username):
+#         self._company_source_code = company_source_code
+#         self._username = username
+#         self._hash = Hash()
 
-class IDGenerator(object):
-    def __init__(self, company_source_code, username):
-        self._company_source_code = company_source_code
-        self._username = username
-        self._hash = Hash()
 
 
+def id_generator(source, company, username):
+    source_code = acquire_code(SOURCE_TABLENAME, source)
+    company_code = acquire_code(COMPANY_TABLENAME, company)
+    if not(source_code) or not(company_code):
+        logger.error('invalid business name or source name')
+        return 'error'
 
-def id_generator(company, source, username):
     hashid = Hash()
-    encoded_user = hashid.encode(username)
-    encoded_company = acquire
+    username_code = hashid.encode(username)
+    return company_code + source_code + username_code
+
 
 
 
