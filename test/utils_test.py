@@ -5,9 +5,9 @@ from utils import Hash
 
 class TestHash(unittest.TestCase):
     @parameterized.expand([
-        # ('a', 0),
-        # ('ai', 2),
-        # ('a0', 0),
+        ('a', 1),
+        ('ai', 2),
+        ('a0', 0),
         ('jess0000', 1),
         ('jess0001', 4)
     ])
@@ -42,6 +42,7 @@ class TestHash(unittest.TestCase):
         ('jess0002', 'HFFFT7'),
         ('joe4444', 'JJY3TJ'),
         ('rachel01', 'FPRWTG'),
+        ('jess1234','JI7GHY')
 
     ])
     def test_hashed_function(self, input_str, hashed_result):
