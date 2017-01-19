@@ -1,9 +1,3 @@
-# for prod
-hashids
-pyyaml
-nose
-
-
 #unit test
 nose
 nose-parameterized
