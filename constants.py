@@ -1,12 +1,10 @@
-# these data can be stored in the database
+COMPANY_CODE = [
+    ['000', 'initech'],
+    ['001', 'initrode']
+]
 
-COMPANY_CODE = {
-    'initech': '000',
-    'initrode': '001'
-}
-
-LOGIN_SOURCE_CODE = {
-    'local':'0',
-    'facebook': '1',
-    'google': '2'
-}
+LOGIN_SOURCE_CODE = [
+    ['0', 'local'],
+    ['1', 'facebook'],
+    ['2', 'google']
+]
